@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""The One-Line Cat Joke That Lands (make.fun).
+"""The One-Line Cat Joke That Lands — a make.fun one-line entry.
 
-Writes the entry -- one joke about cats, one line --
-to /output/entry.txt, where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'My cat sat on my keyboard and wrote a better commit message than I have all year — the code review approved it before I did.'
+ENTRY = "My cat walked across my keyboard, deleted my presentation, and then sat on the verdict: it was an improvement."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
